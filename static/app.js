@@ -123,13 +123,11 @@ d3.json(url).then(function (data) {
     xaxis: {
       title: {
         text: 'OTU ID',
-      }
-    },
+      }},
     yaxis: {
       title: {
         text: 'Sample Number',
-      }
-    }
+      }}
   };
 
   Plotly.newPlot("bubble", [trace2], layout2);
