@@ -48,9 +48,9 @@ d3.json(url).then(function (data) {
   first = 940;
 
   // demographics table
-  var list = d3.select("#demo-list");
+  var dList = d3.select("#demo-list");
 
-  list.selectAll("li")
+  dList.selectAll("li")
     .data(attributes)
     .enter()
     .append("li")
@@ -139,7 +139,7 @@ d3.json(url).then(function (data) {
     var selection = dropDown.property("value");
 
     //update the demographic data
-    list.selectAll("li")
+    dlist.selectAll("li")
       .text(function (d) {
         return `${d.stat}: ${d[selection]}`;
       });
