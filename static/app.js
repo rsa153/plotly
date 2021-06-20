@@ -32,9 +32,21 @@ wfreq["stat"] = "wfreq";
 
 attributes = [ethnicity, gender, age, location, bbtype, wfreq];
 
+// first
 first = 940; 
 
 // demographics table
+var list = d3.select("#list");
+
+ list.selectAll("li")
+  .data(attributes)
+  .enter()
+  .append("li")
+  .text(function(d) {
+    return `${d.stat}: ${d[first]}`;
+  })
+  .exit()
+  .remove();
 
 // bar chart
 
