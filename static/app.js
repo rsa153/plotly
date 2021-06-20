@@ -15,7 +15,7 @@ d3.json(url).then(function (data) {
   var metaData = data.metadata;
   var ids = metaData.map(d => d.id);
 
-  var dropDown = d3.selectAll("#dataset");
+  var dropDown = d3.selectAll("#selDataset");
 
   ids.forEach(function (id) {
     var entry = dropDown.append("option");
