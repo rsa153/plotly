@@ -106,9 +106,9 @@ d3.json(url).then(function (data) {
   var color = otuIDs[first].map(x => `rgb(${x / 17},0,${255 - x / 17})`);
 
   var trace2 = {
-    x: otuIDs[starter],
-    y: sampleValues[starter],
-    text: otuLabels[starter],
+    x: otuIDs[first],
+    y: sampleValues[first],
+    text: otuLabels[first],
     mode: 'markers',
     marker: {
       size: size,
@@ -134,3 +134,39 @@ d3.json(url).then(function (data) {
 
   Plotly.newPlot("bubble", [trace2], layout2);
 
+// handle selection changes in dropdown selector
+
+function dropdownChange() {
+
+  var selection = dropDown.property("value");
+
+  //update the demographic data
+
+  demoList.selectAll("li")
+  .text(function(d) {
+  return `${d.stat}: ${d[selection]}`;
+  });
+
+  //update the bar chart
+
+  barHeights = sampleValues[selection].slice(0,10);
+  otuNames = otuIDs[selection].slice(0,10);
+  barTicks = otuNames.map(d=>`OTU ${d}`);
+  barHover = otuLabels[selection].slice(0,10);
+
+  Plotly.restyle("bar", "x", [barHeights]);
+  Plotly.restyle("bar", "text", [barHover]);
+
+  var newBarLayout = {
+    'yaxis.tickvals': yAxis,
+    'yaxis.ticktext': barTicks // the ticktext didn't like not having tickvals also passed in
+  };
+
+  Plotly.relayout("bar", newBarLayout);
+  
+}
+
+//event watcher:
+dropDown.on("change", dropdownChange);
+
+});
