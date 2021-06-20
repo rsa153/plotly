@@ -67,7 +67,33 @@ d3.json(url).then(function (data) {
   var otuLabels = newUnpack(data.samples, "otu_labels");
   var sampleValues = newUnpack(data.samples, "sample_values");
 
+  var barHeights = sampleValues[starter].slice(0,10);
+  var otuNames = otuIDs[starter].slice(0,10);
+  var barTicks = otuNames.map(d=>`OTU ${d}`);
+  var barHover = otuLabels[starter].slice(0,10);
+  var yAxis = [9,8,7,6,5,4,3,2,1,0];
 
 
+  var trace1 = {
+    x: barHeights,
+    y: yAxis,
+    type: "bar",
+    orientation: "h",
+    text: barHover
+  };
 
+  var layout1 = {
+    title: 'Top Microbes',
+    yaxis: {
+      tickvals: yAxis,
+      ticktext: barTicks
+    },
+    xaxis: {
+      title: {
+        text: 'Sample Numbers',
+      }
+    }
+  };
+
+  Plotly.newPlot("bar", [trace1], layout1);
 // bubble chart variables
