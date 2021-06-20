@@ -8,7 +8,7 @@ function newUnpack(rows, index) {
   return newObject;
 }
 
-var url = "../data/samples.json"
+var url = "static/samples.json"
 
 d3.json(url).then(function (data) {
 
