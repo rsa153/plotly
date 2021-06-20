@@ -134,39 +134,48 @@ d3.json(url).then(function (data) {
 
   Plotly.newPlot("bubble", [trace2], layout2);
 
-// handle selection changes in dropdown selector
+  // handle selection changes in dropdown selector
 
-function dropdownChange() {
+  function dropdownChange() {
 
-  var selection = dropDown.property("value");
+    var selection = dropDown.property("value");
 
-  //update the demographic data
+    //update the demographic data
+    demoList.selectAll("li")
+      .text(function (d) {
+        return `${d.stat}: ${d[selection]}`;
+      });
 
-  demoList.selectAll("li")
-  .text(function(d) {
-  return `${d.stat}: ${d[selection]}`;
-  });
+    //update the bar chart
+    barHeights = sampleValues[selection].slice(0, 10);
+    otuNames = otuIDs[selection].slice(0, 10);
+    barTicks = otuNames.map(d => `OTU ${d}`);
+    barHover = otuLabels[selection].slice(0, 10);
 
-  //update the bar chart
+    Plotly.restyle("bar", "x", [barHeights]);
+    Plotly.restyle("bar", "text", [barHover]);
 
-  barHeights = sampleValues[selection].slice(0,10);
-  otuNames = otuIDs[selection].slice(0,10);
-  barTicks = otuNames.map(d=>`OTU ${d}`);
-  barHover = otuLabels[selection].slice(0,10);
+    var newBarLayout = {
+      'yaxis.tickvals': yAxis,
+      'yaxis.ticktext': barTicks
+    };
 
-  Plotly.restyle("bar", "x", [barHeights]);
-  Plotly.restyle("bar", "text", [barHover]);
+    Plotly.relayout("bar", newBarLayout);
 
-  var newBarLayout = {
-    'yaxis.tickvals': yAxis,
-    'yaxis.ticktext': barTicks // the ticktext didn't like not having tickvals also passed in
-  };
+  //update the bubble chart
+  Plotly.restyle("bubble", "x", [otuIDs[selection]]);
+  Plotly.restyle("bubble", "y", [sampleValues[first]]);
+  Plotly.restyle("bubble", "text", [otuLabels[first]]);
 
-  Plotly.relayout("bar", newBarLayout);
-  
+  size = sampleValues[selection];
+  sizeRef = 2.0 * Math.max(...size) / (maxMarker ** 2);
+  color = otuIDs[selection].map(x => `rgb(${x / 17},0,${255 - x / 17})`);
+
+  Plotly.restyle("bubble", "marker.size", [size]);
+  Plotly.restyle("bubble", "marker.sizeref", [sizeRef]);
+  Plotly.restyle("bubble", "marker.color", [color]);
 }
 
-//event watcher:
 dropDown.on("change", dropdownChange);
 
 });
