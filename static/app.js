@@ -103,4 +103,34 @@ d3.json(url).then(function (data) {
   var size = sampleValues[first];
   var sizeRef = 2.0 * Math.max(...size) / (maxMarker ** 2);
 
-  var color = otuIDs[first].map(x => `rgb(${x/17},0,${255-x/17})`);
+  var color = otuIDs[first].map(x => `rgb(${x / 17},0,${255 - x / 17})`);
+
+  var trace2 = {
+    x: otuIDs[starter],
+    y: sampleValues[starter],
+    text: otuLabels[starter],
+    mode: 'markers',
+    marker: {
+      size: size,
+      sizeref: sizeRef,
+      sizemode: 'area',
+      color: color
+    },
+  };
+
+  var layout2 = {
+    title: 'Prevalence of Microbe',
+    xaxis: {
+      title: {
+        text: 'OTU ID',
+      }
+    },
+    yaxis: {
+      title: {
+        text: 'Sample Number',
+      }
+    }
+  };
+
+  Plotly.newPlot("bubble", [trace2], layout2);
+
