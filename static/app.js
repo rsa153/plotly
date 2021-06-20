@@ -67,11 +67,11 @@ d3.json(url).then(function (data) {
   var otuLabels = newUnpack(data.samples, "otu_labels");
   var sampleValues = newUnpack(data.samples, "sample_values");
 
-  var barHeights = sampleValues[starter].slice(0,10);
-  var otuNames = otuIDs[starter].slice(0,10);
-  var barTicks = otuNames.map(d=>`OTU ${d}`);
-  var barHover = otuLabels[starter].slice(0,10);
-  var yAxis = [9,8,7,6,5,4,3,2,1,0];
+  var barHeights = sampleValues[first].slice(0, 10);
+  var otuNames = otuIDs[first].slice(0, 10);
+  var barTicks = otuNames.map(d => `OTU ${d}`);
+  var barHover = otuLabels[first].slice(0, 10);
+  var yAxis = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
 
 
   var trace1 = {
@@ -96,4 +96,11 @@ d3.json(url).then(function (data) {
   };
 
   Plotly.newPlot("bar", [trace1], layout1);
-// bubble chart variables
+
+  // bubble chart variables
+
+  var maxMarker = 50;
+  var size = sampleValues[first];
+  var sizeRef = 2.0 * Math.max(...size) / (maxMarker ** 2);
+
+  var color = otuIDs[first].map(x => `rgb(${x/17},0,${255-x/17})`);
