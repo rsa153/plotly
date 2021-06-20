@@ -139,7 +139,7 @@ d3.json(url).then(function (data) {
     var selection = dropDown.property("value");
 
     //update the demographic data
-    demoList.selectAll("li")
+    list.selectAll("li")
       .text(function (d) {
         return `${d.stat}: ${d[selection]}`;
       });
