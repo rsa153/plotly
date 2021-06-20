@@ -48,7 +48,7 @@ d3.json(url).then(function (data) {
   first = 940;
 
   // demographics table
-  var list = d3.select("#sample-metadata");
+  var list = d3.select("#demo-list");
 
   list.selectAll("li")
     .data(attributes)
