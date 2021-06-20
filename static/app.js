@@ -59,8 +59,15 @@ d3.json(url).then(function (data) {
     })
     .exit()
     .remove();
-  
 
-// bar chart variables
+
+  // bar chart variables
+
+  var otuIDs = newUnpack(data.samples, "otu_ids");
+  var otuLabels = newUnpack(data.samples, "otu_labels");
+  var sampleValues = newUnpack(data.samples, "sample_values");
+
+
+
 
 // bubble chart variables
